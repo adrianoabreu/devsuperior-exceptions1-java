@@ -18,6 +18,7 @@ public class ProblemaCriandoExcecoesPersonalizadas1 {
 	 * - A data de saída deve ser maior que a data de entrada
 	 * 
 	 * Solução 1 (muito ruim): lógica de validação no programa principal
+	 * Caminho gitHub:  https://github.com/adrianoabreu/exceptions1-java
 	 */
 	public static void main(String[] args) throws ParseException {
 		
@@ -44,13 +45,21 @@ public class ProblemaCriandoExcecoesPersonalizadas1 {
 			System.out.print("Check-out date (dd/MM/yyyy): ");
 			checkOut = sdf.parse(sc.next());
 			
-			Date agora = new Date();
-			if(checkIn.before(agora) || checkOut.before(agora)) { //se as datas forem anteriores a data corrente, mostrar mensagem de erro. 
-				System.out.println("Erro na Reserva: Datas para atualização devem ser futuras.");
-			} else if(!checkOut.after(checkIn)) {  //se a data de checkOut não for posterior a data de checkIn, mostra mensagem de erro.
-				System.out.println("Erro na reserva: Data de check-out deve ser posterior a data de check-in.");
+			//Versão 1 do projeto Exceptions
+			//Date agora = new Date();
+			//if(checkIn.before(agora) || checkOut.before(agora)) { //se as datas forem anteriores a data corrente, mostrar mensagem de erro. 
+			//	System.out.println("Erro na Reserva: Datas para atualização devem ser futuras.");
+			//} else if(!checkOut.after(checkIn)) {  //se a data de checkOut não for posterior a data de checkIn, mostra mensagem de erro.
+			//	System.out.println("Erro na reserva: Data de check-out deve ser posterior a data de check-in.");
+			//} else {
+			//	reserva.atualizarDatas(checkIn, checkOut);
+			//	System.out.println("Reserva: " + reserva);
+			//}
+			
+			String erro = reserva.atualizarDatas(checkIn, checkOut);
+			if (erro != null) {
+				System.out.println("Erro na reserva " + erro);
 			} else {
-				reserva.atualizarDatas(checkIn, checkOut);
 				System.out.println("Reserva: " + reserva);
 			}
 			

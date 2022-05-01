@@ -39,9 +39,25 @@ public class Reserva {
 		return TimeUnit.DAYS.convert(diferenca, TimeUnit.MILLISECONDS);  // convertendo o calculo de millisegundos para numero de dias.
 	}
 	
-	public void atualizarDatas(Date checkIn, Date checkOut) {
+	//Versão 1 do projeto Exceptions
+	//public void atualizarDatas(Date checkIn, Date checkOut) {
+	//	this.dataCheckIn   = checkIn;
+	//	this.dataCheckOut  = checkOut;
+	//}
+	
+	public String atualizarDatas(Date checkIn, Date checkOut) {
+		Date agora = new Date();  // data corrente
+		if(checkIn.before(agora) || checkOut.before(agora)) { //se as datas forem anteriores a data corrente, mostrar mensagem de erro. 
+			return "Datas para atualização devem ser futuras.";
+		} 
+		
+		if(!checkOut.after(checkIn)) {  //se a data de checkOut não for posterior a data de checkIn, mostra mensagem de erro.
+			return "Data de check-out deve ser posterior a data de check-in.";
+		}
+		
 		this.dataCheckIn   = checkIn;
 		this.dataCheckOut  = checkOut;
+		return null;   // é o critério estabelecido para dizer que este método não retornou erro.
 	}
 	
 	@Override
