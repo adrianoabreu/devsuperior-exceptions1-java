@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import model.exceptions.DominioDeExcecao;
+
 public class Reserva {
 
 	private Integer numeroDoQuarto;
@@ -13,6 +15,9 @@ public class Reserva {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public Reserva(Integer numeroDoQuarto, Date dataCheckIn, Date dataCheckOut) {
+		if(!dataCheckOut.after(dataCheckIn)) {  //se a data de checkOut não for posterior a data de checkIn, mostra mensagem de erro.
+			throw new DominioDeExcecao("Data de check-out deve ser posterior a data de check-in.");
+		}
 		this.numeroDoQuarto = numeroDoQuarto;
 		this.dataCheckIn = dataCheckIn;
 		this.dataCheckOut = dataCheckOut;
@@ -45,6 +50,7 @@ public class Reserva {
 	//	this.dataCheckOut  = checkOut;
 	//}
 	
+	/* Versão 2 do projeto Exceptions
 	public String atualizarDatas(Date checkIn, Date checkOut) {
 		Date agora = new Date();  // data corrente
 		if(checkIn.before(agora) || checkOut.before(agora)) { //se as datas forem anteriores a data corrente, mostrar mensagem de erro. 
@@ -58,6 +64,22 @@ public class Reserva {
 		this.dataCheckIn   = checkIn;
 		this.dataCheckOut  = checkOut;
 		return null;   // é o critério estabelecido para dizer que este método não retornou erro.
+	}*/
+	
+	public void atualizarDatas(Date checkIn, Date checkOut) {
+		Date agora = new Date();  // data corrente
+		if(checkIn.before(agora) || checkOut.before(agora)) { //se as datas forem anteriores a data corrente, mostrar mensagem de erro. 
+			//throw new IllegalArgumentException("Datas para atualização devem ser futuras.");
+			throw new DominioDeExcecao("Datas para atualização devem ser futuras.");
+		} 
+		
+		if(!checkOut.after(checkIn)) {  //se a data de checkOut não for posterior a data de checkIn, mostra mensagem de erro.
+			//throw new IllegalArgumentException("Data de check-out deve ser posterior a data de check-in.");
+			throw new DominioDeExcecao("Data de check-out deve ser posterior a data de check-in.");
+		}
+		
+		this.dataCheckIn   = checkIn;
+		this.dataCheckOut  = checkOut;
 	}
 	
 	@Override
